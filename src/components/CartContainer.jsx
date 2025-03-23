@@ -1,15 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import { Modal } from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
 
 const CartContainer = ({ cart, handleRemoveFromCart, setIsModalOpen }) => {
+  const [isFormOpen, setIsFormOpen] = useState(false); // State to control the form modal
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    address: "",
+  });
+  const [formError, setFormError] = useState("");
+
   const cartItems = Object.values(cart);
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const { name, email, address } = formData;
+
+    // Validate form fields
+    if (!name || !email || !address) {
+      setFormError("All fields are required.");
+      return;
+    }
+
+    // Clear error and close the form modal
+    setFormError("");
+    setIsFormOpen(false);
+
+    // Proceed to confirm the order
+    setIsModalOpen(true);
+  };
+
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 w-full lg:w-1/3 max-h-[270px] overflow-y-auto">
+    <div className="bg-white shadow-md rounded-lg p-4 w-full lg:w-1/3 max-h-[300px] overflow-y-auto">
       <h2 className="text-lg font-bold text-gray-800">
         Your Cart ({cartItems.length})
       </h2>
@@ -65,7 +101,7 @@ const CartContainer = ({ cart, handleRemoveFromCart, setIsModalOpen }) => {
               <p>This is carbon neutral delivery</p>
             </div>
             <button
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setIsFormOpen(true)} // Open the form modal
               className="w-full bg-orange-600 text-white py-2 px-4 rounded-full mt-4 hover:bg-orange-700"
             >
               Confirm Order
@@ -73,6 +109,68 @@ const CartContainer = ({ cart, handleRemoveFromCart, setIsModalOpen }) => {
           </div>
         </div>
       )}
+
+      {/* Form Modal */}
+      <Modal
+        open={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        center
+        showCloseIcon={false}
+        closeOnOverlayClick={false}
+        classNames={{
+          modal: "rounded-md p-4 w-full max-w-sm sm:max-w-md md:max-w-lg", // Adjust width for mobile, tablet, and desktop
+          overlay: "bg-black bg-opacity-50 backdrop-blur-none", // Ensure no blur effect
+        }}
+      >
+        <h2 className="text-lg font-bold text-gray-800 mb-4 text-center">Fill Your Details</h2>
+        <form onSubmit={handleFormSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-600"
+            />
+          </div>
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-600"
+            />
+          </div>
+          <div>
+            <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+              Address
+            </label>
+            <textarea
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleInputChange}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-600"
+            ></textarea>
+          </div>
+          {formError && <p className="text-red-600 text-sm">{formError}</p>}
+          <button
+            type="submit"
+            className="w-full bg-orange-600 text-white py-2 px-4 rounded-full hover:bg-orange-700"
+          >
+            Submit
+          </button>
+        </form>
+      </Modal>
     </div>
   );
 };
