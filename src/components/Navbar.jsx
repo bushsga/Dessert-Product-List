@@ -53,9 +53,15 @@ const Navbar = ({ cart }) => {
       >
         <div className="w-full bg-white">
           <ul className="flex flex-col items-start space-y-4 py-4 px-6">
-            <li className="hover:text-orange-600 cursor-pointer">Home</li>
-            <li className="hover:text-orange-600 cursor-pointer">Products</li>
-            <li className="hover:text-orange-600 cursor-pointer">Contact</li>
+            <li className="hover:text-orange-600 cursor-pointer border-b border-gray-200 pb-2 w-full">
+              Home
+            </li>
+            <li className="hover:text-orange-600 cursor-pointer border-b border-gray-200 pb-2 w-full">
+              Products
+            </li>
+            <li className="hover:text-orange-600 cursor-pointer border-b border-gray-200 pb-2 w-full">
+              Contact
+            </li>
           </ul>
         </div>
       </Modal>

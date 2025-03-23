@@ -45,17 +45,17 @@ const ProductGrid = ({ cart, setCart }) => {
           {/* Responsive Product Image */}
           <picture>
             <source
-              srcSet={`${product.image.mobile} 1x, ${product.image.mobile.replace(
-                ".jpg",
-                "@2x.jpg"
-              )} 2x`}
+              srcSet={product.image.mobile}
               media="(max-width: 480px)"
             />
             <source
               srcSet={product.image.tablet}
               media="(min-width: 481px) and (max-width: 1023px)"
             />
-            <source srcSet={product.image.desktop} media="(min-width: 1024px)" />
+            <source
+              srcSet={product.image.desktop}
+              media="(min-width: 1024px)"
+            />
             <img
               src={product.image.thumbnail}
               alt={product.name}
