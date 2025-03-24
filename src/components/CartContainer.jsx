@@ -3,7 +3,7 @@ import { FaTrash } from "react-icons/fa";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 
-const CartContainer = ({ cart, handleRemoveFromCart, setIsModalOpen }) => {
+const CartContainer = ({ cart, setIsModalOpen, setOrders }) => {
   const [isFormOpen, setIsFormOpen] = useState(false); // State to control the form modal
   const [formData, setFormData] = useState({
     name: "",
@@ -36,12 +36,28 @@ const CartContainer = ({ cart, handleRemoveFromCart, setIsModalOpen }) => {
       return;
     }
 
-    // Clear error and close the form modal
-    setFormError("");
-    setIsFormOpen(false);
+    // Generate a unique tracking ID
+    const newTrackingId = `TRACK-${Date.now()}`;
 
-    // Proceed to confirm the order
-    setIsModalOpen(true);
+    // Save the order details
+    const newOrder = {
+      trackingId: newTrackingId,
+      name,
+      email,
+      address,
+      cartItems: cart, // Pass the cart items
+      totalPrice,
+      status: "Preparing", // Initial status
+    };
+
+    // Update the orders state in page.js
+    setOrders((prevOrders) => [...prevOrders, newOrder]);
+
+    // Clear form and open the Order Confirmation Modal
+    setFormError("");
+    setFormData({ name: "", email: "", address: "" });
+    setIsFormOpen(false); // Close the form modal
+    setIsModalOpen(true); // Open the Order Confirmation Modal
   };
 
   return (
@@ -92,14 +108,6 @@ const CartContainer = ({ cart, handleRemoveFromCart, setIsModalOpen }) => {
                 ${totalPrice.toFixed(2)}
               </p>
             </div>
-            <div className="flex items-center justify-center mt-4 text-sm text-gray-500">
-              <img
-                src="/assets/images/icon-carbon-neutral.svg"
-                alt="Carbon Neutral"
-                className="w-6 h-6 mr-2"
-              />
-              <p>This is carbon neutral delivery</p>
-            </div>
             <button
               onClick={() => setIsFormOpen(true)} // Open the form modal
               className="w-full bg-orange-600 text-white py-2 px-4 rounded-full mt-4 hover:bg-orange-700"
@@ -118,8 +126,8 @@ const CartContainer = ({ cart, handleRemoveFromCart, setIsModalOpen }) => {
         showCloseIcon={false}
         closeOnOverlayClick={false}
         classNames={{
-          modal: "rounded-md p-4 w-full max-w-sm sm:max-w-md md:max-w-lg", // Adjust width for mobile, tablet, and desktop
-          overlay: "bg-black bg-opacity-50 backdrop-blur-none", // Ensure no blur effect
+          modal: "rounded-md p-4 w-full max-w-sm sm:max-w-md md:max-w-lg",
+          overlay: "bg-black bg-opacity-50 backdrop-blur-none",
         }}
       >
         <h2 className="text-lg font-bold text-gray-800 mb-4 text-center">Fill Your Details</h2>
@@ -176,3 +184,4 @@ const CartContainer = ({ cart, handleRemoveFromCart, setIsModalOpen }) => {
 };
 
 export default CartContainer;
+

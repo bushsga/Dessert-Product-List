@@ -3,7 +3,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 
-const Navbar = ({ cart }) => {
+const Navbar = ({ cart, setShowTrackingPage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Calculate the total number of items in the cart
@@ -15,11 +15,11 @@ const Navbar = ({ cart }) => {
   return (
     <nav className="bg-white shadow-md p-4 flex justify-between items-center">
       {/* Logo */}
-      <div className="text-2xl font-bold text-orange-600">Dessert Cart</div>
+      <div className="text-2xl font-bold text-orange-600 cursor-pointer" onClick={() => setShowTrackingPage(false)}>Dessert Cart</div>
 
       {/* Desktop Navigation Links */}
       <ul className="hidden md:flex space-x-6 text-gray-700">
-        <li className="hover:text-orange-600 cursor-pointer">Home</li>
+        <li className="hover:text-orange-600 cursor-pointer" onClick={() => setShowTrackingPage(false)}>Home</li>
         <li className="hover:text-orange-600 cursor-pointer">Products</li>
         <li className="hover:text-orange-600 cursor-pointer">Contact</li>
       </ul>

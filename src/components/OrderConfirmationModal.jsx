@@ -2,7 +2,7 @@ import React from "react";
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 
-const OrderConfirmationModal = ({ isOpen, onClose, cart, totalPrice, resetCart }) => {
+const OrderConfirmationModal = ({ isOpen, onClose, cart, totalPrice, resetCart, navigateToTrackingPage }) => {
   if (!isOpen) return null;
 
   const onOpenModal = () => setOpen(true);
@@ -73,6 +73,7 @@ const OrderConfirmationModal = ({ isOpen, onClose, cart, totalPrice, resetCart }
           onClick={() => {
             resetCart();
             onClose();
+            navigateToTrackingPage(); // Navigate to the Tracking Page
           }}
           className="w-full bg-orange-600 text-white py-2 px-4 rounded-full mt-6 hover:bg-orange-700"
         >
