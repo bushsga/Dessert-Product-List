@@ -1,9 +1,11 @@
+"use client";
 import React, { useState } from "react";
+import Link from "next/link";
 import { FaShoppingCart } from "react-icons/fa";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 
-const Navbar = ({ cart, setShowTrackingPage }) => {
+const Navbar = ({ cart = {} }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Calculate the total number of items in the cart
@@ -15,13 +17,23 @@ const Navbar = ({ cart, setShowTrackingPage }) => {
   return (
     <nav className="bg-white shadow-md p-4 flex justify-between items-center">
       {/* Logo */}
-      <div className="text-2xl font-bold text-orange-600 cursor-pointer" onClick={() => setShowTrackingPage(false)}>Dessert Cart</div>
+      <Link href="/" className="text-2xl font-bold text-orange-600">
+        Dessert Cart
+      </Link>
 
       {/* Desktop Navigation Links */}
       <ul className="hidden md:flex space-x-6 text-gray-700">
-        <li className="hover:text-orange-600 cursor-pointer" onClick={() => setShowTrackingPage(false)}>Home</li>
+        <li>
+          <Link href="./" className="hover:text-orange-600">
+            Home
+          </Link>
+        </li>
         <li className="hover:text-orange-600 cursor-pointer">Products</li>
-        <li className="hover:text-orange-600 cursor-pointer">Contact</li>
+        <li>
+          <Link href="/contact" className="hover:text-orange-600">
+            Contact
+          </Link>
+        </li>
       </ul>
 
       {/* Cart Icon */}
@@ -53,14 +65,24 @@ const Navbar = ({ cart, setShowTrackingPage }) => {
       >
         <div className="w-full bg-white">
           <ul className="flex flex-col items-start space-y-4 py-4 px-6">
-            <li className="hover:text-orange-600 cursor-pointer border-b border-gray-200 pb-2 w-full">
-              Home
+            <li>
+              <Link
+                href="/"
+                className="hover:text-orange-600 border-b border-gray-200 pb-2 w-full"
+              >
+                Home
+              </Link>
             </li>
             <li className="hover:text-orange-600 cursor-pointer border-b border-gray-200 pb-2 w-full">
               Products
             </li>
-            <li className="hover:text-orange-600 cursor-pointer border-b border-gray-200 pb-2 w-full">
-              Contact
+            <li>
+              <Link
+                href="/contact"
+                className="hover:text-orange-600 border-b border-gray-200 pb-2 w-full"
+              >
+                Contact
+              </Link>
             </li>
           </ul>
         </div>

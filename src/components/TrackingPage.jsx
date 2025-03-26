@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaShippingFast, FaCheckCircle, FaClock } from "react-icons/fa";
 
 const TrackingPage = ({ orders }) => {
+  
+
   return (
     <div className="p-6 bg-gray-50 min-h-screen overflow-x-hidden">
       <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
@@ -85,11 +87,7 @@ const TrackingPage = ({ orders }) => {
               </div>
 
               {/* Order Footer */}
-              <div className="mt-4">
-                <button className="w-full bg-orange-600 text-white py-2 px-4 rounded-full hover:bg-orange-700">
-                  View Details
-                </button>
-              </div>
+              
             </div>
           ))}
         </div>

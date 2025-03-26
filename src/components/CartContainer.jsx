@@ -80,11 +80,19 @@ const CartContainer = ({ cart, setIsModalOpen, setOrders }) => {
           <ul className="divide-y divide-gray-200">
             {cartItems.map((item) => (
               <li key={item.name} className="flex justify-between items-center py-4">
-                <div>
-                  <h3 className="text-sm font-bold text-gray-800">{item.name}</h3>
-                  <p className="text-sm text-gray-500">
-                    {item.quantity}x @ ${item.price.toFixed(2)}
-                  </p>
+                <div className="flex items-center space-x-4">
+                  {/* Thumbnail */}
+                  <img
+                    src={item.image.thumbnail}
+                    alt={item.name}
+                    className="w-16 h-16 object-cover rounded-lg"
+                  />
+                  <div>
+                    <h3 className="text-sm font-bold text-gray-800">{item.name}</h3>
+                    <p className="text-sm text-gray-500">
+                      {item.quantity}x @ ${item.price.toFixed(2)}
+                    </p>
+                  </div>
                 </div>
                 <div className="flex items-center space-x-4">
                   <p className="text-sm font-semibold text-gray-800">
